@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Registro</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    .error-message {
+      color: #dc3545;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+    .is-invalid {
+      border-color: #dc3545 !important;
+    }
+    .aficion-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+      padding: 5px 10px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+    }
+    .remove-aficion {
+      color: #dc3545;
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0 5px;
+    }
+    .card {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .form-section {
+      border-bottom: 1px solid #dee2e6;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+    .form-section:last-child {
+      border-bottom: none;
+    }
+    .section-title {
+      color: #495057;
+    }
+  </style>
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Formulario Registro</h3>
+          </div>
+          <div class="card-body">
+            <form id="registroForm" action="#" method="post" novalidate>
+              <div class="form-section">
+                <h4 class="section-title mb-3">Credenciales Usuario</h4>
+                <div class="mb-3">
+                  <label for="usuario" class="form-label">Nombre de Usuario</label>
+                  <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Ingresar nombre usuario">
+                  <div id="errorUsuario" class="error-message"></div>
+                  <small class="form-text text-muted">Debe tener entre 5 y 10 caracteres, comenzar con letras y puede contener dígitos SOLO al final.</small>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="contraseña" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Ingresar contraseña">
+                    <div id="errorContraseña" class="error-message"></div>
+                    <small class="form-text text-muted">Debe tener entre 3 y 6 caracteres, con al menos un dígito y una letra. NO puede contener el nombre de usuario.</small>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="confirmarContraseña" class="form-label">Confirmar Contraseña</label>
+                    <input type="password" class="form-control" id="confirmarContraseña" name="confirmarContraseña" placeholder="Confirma tu contraseña">
+                    <div id="errorConfirmarContraseña" class="error-message"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h4 class="section-title mb-3">Datos Personales</h4>
+                <div class="mb-3">
+                  <label for="direccion" class="form-label">Dirección</label>
+                  <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingresa tu dirección">
+                  <div id="errorDireccion" class="error-message"></div>
+                </div>
+                <div class="mb-3">
+                  <label for="comuna" class="form-label">Comuna</label>
+                  <select class="form-select" id="comuna" name="comuna">
+                    <option value="" selected>Seleccione una comuna</option>
+                    <option value="Santiago">Santiago</option>
+                    <option value="Providencia">Providencia</option>
+                    <option value="Las Condes">Las Condes</option>
+                    <option value="Ñuñoa">Ñuñoa</option>
+                    <option value="La Florida">La Florida</option>
+                    <option value="Maipú">Maipú</option>
+                    <option value="Puente Alto">Puente Alto</option>
+                    <option value="Vitacura">Vitacura</option>
+                    <option value="La Reina">Curicó</option>
+                    <option value="Estación Central">Valdivia</option>
+                  </select>
+                  <div id="errorComuna" class="error-message"></div>
+                </div>
+                <div class="mb-3">
+                  <label for="telefono" class="form-label">Número de Celular</label>
+                  <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ej: +56912345678">
+                  <div id="errorTelefono" class="error-message"></div>
+                </div>
+                <div class="mb-3">
+                  <label for="urlWeb" class="form-label">Página Web Personal (opcional)</label>
+                  <input type="url" class="form-control" id="urlWeb" name="urlWeb" placeholder="https://www.mipagina.cl">
+                  <div id="errorUrlWeb" class="error-message"></div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h4 class="section-title mb-3">Aficiones</h4>
+                <div class="row mb-3">
+                  <div class="col-md-8">
+                    <label for="aficion" class="form-label">Afición</label>
+                    <input type="text" class="form-control" id="aficion" name="aficion" placeholder="Ingresa una afición">
+                  </div>
+                  <div class="col-md-4 d-flex align-items-end">
+                    <button type="button" id="btnAgregarAficion" class="btn btn-secondary w-100 mt-md-0 mt-2">Añadir</button>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Aficiones Registradas</label>
+                  <div id="listaAficiones" class="p-2 border rounded bg-white" style="min-height: 100px;">
+                    <p id="sinAficiones" class="text-muted mb-0">No hay aficiones registradas</p>
+                  </div>
+                  <div id="errorAficiones" class="error-message"></div>
+                  <small class="form-text text-muted">Debes ingresar al menos 2 aficiones.</small>
+                </div>
+              </div>
+
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Registrarse</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('registroForm');
+        const usuario = document.getElementById('usuario');
+        const contraseña = document.getElementById('contraseña'); 
+        const confirmarContraseña = document.getElementById('confirmarContraseña');
+        const direccion = document.getElementById('direccion');
+        const comuna = document.getElementById('comuna');
+        const telefono = document.getElementById('telefono');
+        const urlWeb = document.getElementById('urlWeb');
+        const aficion = document.getElementById('aficion');
+        const btnAgregarAficion = document.getElementById('btnAgregarAficion');
+        const listaAficiones = document.getElementById('listaAficiones');
+        const sinAficiones = document.getElementById('sinAficiones');
+        
+        let aficiones = [];
+
+        function obtenerIdElementoError(idInput) {
+            const mapaIds = {
+                'usuario': 'errorUsuario',
+                'contraseña': 'errorContraseña',
+                'confirmarContraseña': 'errorConfirmarContraseña',
+                'direccion': 'errorDireccion',
+                'comuna': 'errorComuna',
+                'telefono': 'errorTelefono',
+                'urlWeb': 'errorUrlWeb',
+                'aficion': 'errorAficiones'
+            };
+            return mapaIds[idInput] || 'error' + idInput.charAt(0).toUpperCase() + idInput.slice(1);
+        }
+
+        function mostrarError(input, mensaje) {
+            const idElementoError = obtenerIdElementoError(input.id);
+            const divError = document.getElementById(idElementoError);
+            if (divError) {
+                divError.textContent = mensaje;
+                input.classList.add('is-invalid');
+            }
+        }
+
+        function limpiarError(input) {
+            const idElementoError = obtenerIdElementoError(input.id);
+            const divError = document.getElementById(idElementoError);
+            if (divError) {
+                divError.textContent = '';
+                input.classList.remove('is-invalid');
+            }
+        }
+
+        function sanitizarHTML(texto) {
+            const div = document.createElement('div');
+            div.textContent = texto;
+            return div.innerHTML;
+        }
+
+        function validarUsuario() {
+            const valor = usuario.value.trim();
+            const regex = /^[a-zA-Z]+\d*$/;
+            
+            if (valor === '') {
+                mostrarError(usuario, 'El nombre de usuario es OBLIGATORIO');
+                return false;
+            } else if (valor.length < 5 || valor.length > 10) {
+                mostrarError(usuario, 'El nombre debe tener entre 5 y 10 caracteres');
+                return false;
+            } else if (!regex.test(valor)) {
+                mostrarError(usuario, 'El nombre debe comenzar con letras y puede contener dígitos solo al final');
+                return false;
+            } else {
+                limpiarError(usuario);
+                return true;
+            }
+        }
+
+        function validarContraseña() {
+            const valor = contraseña.value;
+            const nombreUsuario = usuario.value.trim().toLowerCase();
+            const tieneLetras = /[a-zA-Z]/.test(valor);
+            const tieneNumeros = /\d/.test(valor);
+            
+            if (valor === '') {
+                mostrarError(contraseña, 'La contraseña es OBLIGATORIA');
+                return false;
+            } else if (valor.length < 3 || valor.length > 6) {
+                mostrarError(contraseña, 'La contraseña debe tener entre 3 y 6 caracteres');
+                return false;
+            } else if (!tieneLetras || !tieneNumeros) {
+                mostrarError(contraseña, 'La contraseña debe tener al menos una letra y un número');
+                return false;
+            } else if (nombreUsuario !== '' && valor.toLowerCase().includes(nombreUsuario)) {
+                mostrarError(contraseña, 'La contraseña no puede contener el NOMBRE DE USUARIO');
+                return false;
+            } else {
+                limpiarError(contraseña);
+                return true;
+            }
+        }
+
+        function validarConfirmacion() {
+            if (confirmarContraseña.value === '') {
+                mostrarError(confirmarContraseña, 'Debes CONFIRMAR la contraseña');
+                return false;
+            } else if (confirmarContraseña.value !== contraseña.value) {
+                mostrarError(confirmarContraseña, 'Las contraseñas NO COINCIDEN');
+                return false;
+            } else {
+                limpiarError(confirmarContraseña);
+                return true;
+            }
+        }
+
+        function validarDireccion() {
+            if (direccion.value.trim() === '') {
+                mostrarError(direccion, 'La dirección es OBLIGATORIA');
+                return false;
+            } else {
+                limpiarError(direccion);
+                return true;
+            }
+        }
+
+        function validarComuna() {
+            if (comuna.value === '') {
+                mostrarError(comuna, 'TIENES que seleccionar una comuna');
+                return false;
+            } else {
+                limpiarError(comuna);
+                return true;
+            }
+        }
+
+        function validarTelefono() {
+            const valor = telefono.value.trim();
+            const regex = /^\+569\d{8}$/;
+            
+            if (valor === '') {
+                mostrarError(telefono, 'El número de teléfono es OBLIGATORIO');
+                return false;
+            } else if (!regex.test(valor)) {
+                mostrarError(telefono, 'Formato INVÁLIDO. Usa este formato: +569XXXXXXXX');
+                return false;
+            } else {
+                limpiarError(telefono);
+                return true;
+            }
+        }
+        
+        function validarUrlWeb() {
+            const valor = urlWeb.value.trim();
+            
+            if (valor === '') {
+                limpiarError(urlWeb);
+                return true;
+            }
+            
+            try {
+                new URL(valor); 
+                limpiarError(urlWeb);
+                return true;
+            } catch (e) {
+                mostrarError(urlWeb, 'Formato de URL INVÁLIDO. Debe incluir http:// o https://');
+                return false;
+            }
+        }
+
+        function validarAficiones() {
+            const errorAficiones = document.getElementById('errorAficiones');
+            
+            if (aficiones.length < 2) {
+                errorAficiones.textContent = 'Debes añadir MÍNIMO "" aficiones';
+                return false;
+            } else {
+                errorAficiones.textContent = '';
+                return true;
+            }
+        }
+
+        function agregarAficion() {
+            const nuevaAficion = aficion.value.trim();
+            const errorAficiones = document.getElementById('errorAficiones');
+            
+            if (nuevaAficion === '') {
+                return;
+            }
+            
+            if (aficiones.includes(nuevaAficion)) {
+                errorAficiones.textContent = 'Esta afición ya se agregó';
+                aficion.classList.add('is-invalid');
+                return;
+            }
+            
+            errorAficiones.textContent = '';
+            aficion.classList.remove('is-invalid');
+            aficiones.push(nuevaAficion);
+            actualizarListaAficiones();
+            aficion.value = '';
+        }
+
+        function eliminarAficion(indice) {
+            aficiones.splice(indice, 1);
+            actualizarListaAficiones();
+        }
+
+        function actualizarListaAficiones() {
+            if (aficiones.length === 0) {
+                listaAficiones.innerHTML = '<p id="sinAficiones" class="text-muted mb-0">No hay aficiones guardadas</p>';
+                return;
+            }
+            
+            let html = '';
+            aficiones.forEach((elemento, indice) => {
+                const elementoSanitizado = sanitizarHTML(elemento);
+                html += `
+                    <div class="aficion-item">
+                        <span>${elementoSanitizado}</span>
+                        <button type="button" class="remove-aficion" data-index="${indice}">×</button>
+                    </div>
+                `;
+            });
+            
+            listaAficiones.innerHTML = html;
+            
+            document.querySelectorAll('.remove-aficion').forEach(boton => {
+                boton.addEventListener('click', function() {
+                    const indice = parseInt(this.getAttribute('data-index'));
+                    eliminarAficion(indice);
+                });
+            });
+        }
+
+        function validarFormulario() {
+            const esUsuarioValido = validarUsuario();
+            const esContraseñaValida = validarContraseña();
+            const esConfirmacionValida = validarConfirmacion();
+            const esDireccionValida = validarDireccion();
+            const esComunaValida = validarComuna();
+            const esTelefonoValido = validarTelefono();
+            const esUrlValida = validarUrlWeb();
+            const sonAficionesValidas = validarAficiones();
+            
+            return esUsuarioValido && 
+                   esContraseñaValida && 
+                   esConfirmacionValida && 
+                   esDireccionValida && 
+                   esComunaValida && 
+                   esTelefonoValido && 
+                   esUrlValida && 
+                   sonAficionesValidas;
+        }
+
+        btnAgregarAficion.addEventListener('click', agregarAficion);
+        
+        aficion.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                agregarAficion();
+            }
+        });
+
+        usuario.addEventListener('blur', validarUsuario);
+        contraseña.addEventListener('blur', validarContraseña);
+        confirmarContraseña.addEventListener('blur', validarConfirmacion);
+        direccion.addEventListener('blur', validarDireccion);
+        comuna.addEventListener('change', validarComuna);
+        telefono.addEventListener('blur', validarTelefono);
+        urlWeb.addEventListener('blur', validarUrlWeb);
+
+        usuario.addEventListener('input', function() { 
+            limpiarError(usuario);
+            if (contraseña.value !== '') {
+                validarContraseña();
+            }
+        });
+        
+        contraseña.addEventListener('input', function() { limpiarError(contraseña); });
+        confirmarContraseña.addEventListener('input', function() { limpiarError(confirmarContraseña); });
+        direccion.addEventListener('input', function() { limpiarError(direccion); });
+        telefono.addEventListener('input', function() { limpiarError(telefono); });
+        urlWeb.addEventListener('input', function() { limpiarError(urlWeb); });
+        aficion.addEventListener('input', function() { 
+            const errorAficiones = document.getElementById('errorAficiones');
+            errorAficiones.textContent = '';
+            aficion.classList.remove('is-invalid');
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validarFormulario()) {
+                alert('¡FORMULARIO ENVIADO SATISFACTORIAMENTE!');
+                console.log('Datos del formulario:', {
+                    usuario: usuario.value,
+                    direccion: direccion.value,
+                    comuna: comuna.value,
+                    telefono: telefono.value,
+                    urlWeb: urlWeb.value,
+                    aficiones: aficiones
+                });
+
+            } else {
+                validarUsuario();
+                validarContraseña();
+                validarConfirmacion();
+                validarDireccion();
+                validarComuna();
+                validarTelefono();
+                validarUrlWeb();
+                validarAficiones();
+            }
+        });
+
+        comuna.selectedIndex = 0;
+    });
+  </script>
+</body>
+</html>
